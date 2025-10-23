@@ -1,8 +1,7 @@
 package com.example.OrderMicroservice.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import com.example.OrderMicroservice.enums.OrderStatus;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.List;
@@ -15,8 +14,12 @@ import java.util.List;
 @Entity
 @Table(name = "orders")
 public class Order extends BaseEntity{
-    String status;
 
-    @OneToMany
+    private Long userId;
+
+    @Enumerated(EnumType.STRING)
+    private OrderStatus status;
+
+    @OneToMany(mappedBy = "order")
     List<OrderItem> orderItemList;
 }

@@ -15,7 +15,7 @@ import java.time.Instant;
 public class BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    String id;
+    private long id;
 
     @CreatedDate()
     @Column(nullable = false,updatable = false)
@@ -24,6 +24,18 @@ public class BaseEntity {
     @LastModifiedDate
     @Column(nullable = false)
     private Instant updatedAt;
+
+    @PrePersist
+    public void onCreate(){
+        Instant now = Instant.now();
+        this.createdAt = now;
+        this.updatedAt = now;
+    }
+
+    @PostPersist
+    public void onUpdate(){
+        this.updatedAt = Instant.now();
+    }
 
 
 }
